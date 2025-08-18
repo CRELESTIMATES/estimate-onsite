@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>On‑Site Estimate Capture — Calgary Roofing & Exteriors</title>
+  <meta name="description" content="Mobile‑friendly webform to capture on‑site estimate details and email them to the office." />
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Optional tiny CSS tweaks */
+    input, textarea, select, button { font-size: 16px; }
+    .card { background:#fff; border:1px solid #e5e7eb; border-radius:1rem; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+    .label { display:block; font-size:.875rem; color:#374151; margin-bottom:.25rem; font-weight:500 }
+    .control { width:100%; border:1px solid #d1d5db; border-radius:.75rem; padding:.5rem .75rem; outline:none }
+    .control:focus { border-color:#111827; }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div>
+        <h1 class="text-lg font-semibold">On‑Site Estimate Capture</h1>
+        <p class="text-xs text-gray-500">ONLINE ESTIMATES - CALGARY ROOFING & EXTERIORS LIMITED</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="resetDraft" class="text-sm rounded-xl border px-3 py-1 hover:bg-gray-100">Reset</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-6">
+    <!-- Replace action with your Formspree endpoint -->
+    <form id="estimateForm" action="https://formspree.io/f/mrblvnze" method="POST" class="space-y-6" enctype="multipart/form-data">
+      <input type="hidden" name="_subject" value="New On‑Site Estimate Submission" />
+
+      <!-- Contact & Appointment -->
+      <section class="card p-4">
+        <h2 class="text-lg font-semibold mb-3">Contact & Appointment</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="label" for="dateOfficeContacted">DATE OFFICE CONTACTED</label>
+            <input class="control" id="dateOfficeContacted" name="dateOfficeContacted" type="date" required />
+          </div>
+          <div>
+            <label class="label" for="estimateDateTime">DATE AND TIME OF ESTIMATE</label>
+            <input class="control" id="estimateDateTime" name="estimateDateTime" type="datetime-local" required />
+          </div>
+          <div>
+            <label class="label" for="howHear">HOW DID YOU HEAR ABOUT US?</label>
+            <select class="control" id="howHear" name="howHear">
+              <option value="">Select…</option>
+              <option>Google Search</option>
+              <option>Google Maps</option>
+              <option>Referral</option>
+              <option>Social Media</option>
+              <option>Repeat Customer</option>
+              <option>Yard Sign</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Customer -->
+      <section class="card p-4">
+        <h2 class="text-lg font-semibold mb-3">Customer</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="label" for="customerName">CUSTOMER NAME</label>
+            <input class="control" id="customerName" name="customerName" required />
+          </div>
+          <div>
+            <label class="label" for="phone">PHONE #</label>
+            <input class="control" id="phone" name="phone" inputmode="tel" placeholder="(403) 000‑0000" required />
+          </div>
+          <div class="md:col-span-2">
+            <label class="label" for="email">EMAIL</label>
+            <input class="control" id="email" name="email" type="email" placeholder="name@example.com" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="label" for="address">ADDRESS</label>
+            <input class="control" id="address" name="address" required />
+          </div>
+        </div>
+      </section>
+
+      <!-- Insurance -->
+      <section class="card p-4">
+        <h2 class="text-lg font-semibold mb-3">Insurance</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+          <div>
+            <label class="label" for="hasClaim">INSURANCE CLAIM</label>
+            <select class="control" id="hasClaim" name="hasClaim" required>
+              <option value="">Select…</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div>
+            <label class="label" for="insCompany">INSURANCE COMPANY NAME</label>
+            <input class="control" id="insCompany" name="insCompany" />
+          </div>
+          <div>
+            <label class="label" for="policyNumber">INSURANCE POLICY NUMBER (OPTIONAL)</label>
+            <input class="control" id="policyNumber" name="policyNumber" />
+          </div>
+          <div>
+            <label class="label" for="claimNumber">CLAIM NUMBER (OPTIONAL)</label>
+            <input class="control" id="claimNumber" name="claimNumber" />
+          </div>
+        </div>
+      </section>
+
+      <!-- House -->
+      <section class="card p-4">
+        <h2 class="text-lg font-semibold mb-3">House</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="label" for="houseType">HOUSE TYPE</label>
+            <select class="control" id="houseType" name="houseType">
+              <option value="">Select…</option>
+              <option>Detached</option>
+              <option>Duplex</option>
+              <option>Townhouse</option>
+            </select>
+          </div>
+          <div>
+            <label class="label" for="houseStyle">HOUSE STYLE</label>
+            <select class="control" id="houseStyle" name="houseStyle">
+              <option value="">Select…</option>
+              <option>Laned</option>
+              <option>Front Garage</option>
+              <option>No Garage</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notes -->
+      <section class="card p-4">
+        <h2 class="text-lg font-semibold mb-3">Notes</h2>
+        <textarea class="control min-h-[110px]" id="notes" name="notes" placeholder="Site access, hazards, special requests, exclusions, etc."></textarea>
+      </section>
+
+      <!-- PROPERTY DETAILS -->
+      <section class="card p-4">
+        <h2 class="text-lg font-semibold">Property Details — Roof</h2>
+        <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="label" for="roofMaterial">Material</label>
+            <input class="control" id="roofMaterial" name="roofMaterial" placeholder="e.g., Asphalt Shingle, Rubber" />
+          </div>
+          <div>
+            <label class="label" for="dripEdge">Drip Edge</label>
+            <input class="control" id="dripEdge" name="dripEdge" placeholder="Yes/No + lnft" />
+          </div>
+          <div>
+            <label class="label" for="valleyFlashing">Valley Flashing</label>
+            <input class="control" id="valleyFlashing" name="valleyFlashing" placeholder="Type / lnft" />
+          </div>
+          <div>
+            <label class="label" for="iceWater">Ice and Water Protection</label>
+            <input class="control" id="iceWater" name="iceWater" placeholder="% coverage / lnft" />
+          </div>
+          <div>
+            <label class="label" for="plumbingBoot">Plumbing Boot</label>
+            <input class="control" id="plumbingBoot" name="plumbingBoot" placeholder="Count / sizes" />
+          </div>
+          <div>
+            <label class="label" for="airVentilation">Air Ventilation</label>
+            <input class="control" id="airVentilation" name="airVentilation" placeholder="Type/Count (e.g., ridge/box/maximum)" />
+          </div>
+          <div>
+            <label class="label" for="gooseneckVent">Gooseneck Vent</label>
+            <input class="control" id="gooseneckVent" name="gooseneckVent" placeholder="Count" inputmode="numeric" />
+          </div>
+          <div>
+            <label class="label" for="ridgeCap">Ridge Cap</label>
+            <input class="control" id="ridgeCap" name="ridgeCap" placeholder="Type / lnft" />
+          </div>
+          <div>
+            <label class="label" for="armourFlat">Armour Flat</label>
+            <input class="control" id="armourFlat" name="armourFlat" placeholder="Type / area" />
+          </div>
+          <div>
+            <label class="label" for="shingleBundles">Shingles # of Bundles</label>
+            <input class="control" id="shingleBundles" name="shingleBundles" type="number" min="0" step="1" />
+          </div>
+          <div>
+            <label class="label" for="roofPitch">Roof Pitch</label>
+            <input class="control" id="roofPitch" name="roofPitch" placeholder="e.g., 11/12" />
+          </div>
+          <div>
+            <label class="label" for="skyLight">Sky Light</label>
+            <select class="control" id="skyLight" name="skyLight">
+              <option value="">Select…</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="card p-4">
+        <h2 class="text-lg font-semibold">Property Details — Metal Works</h2>
+        <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="label" for="alumSoffit">Aluminum Soffit</label>
+            <input class="control" id="alumSoffit" name="alumSoffit" placeholder="lnft / area" />
+          </div>
+          <div>
+            <label class="label" for="alumFascia">Aluminium Facia</label>
+            <input class="control" id="alumFascia" name="alumFascia" placeholder="lnft" />
+          </div>
+          <div>
+            <label class="label" for="alumGutters">Aluminum Gutters</label>
+            <input class="control" id="alumGutters" name="alumGutters" placeholder="lnft" />
+          </div>
+          <div>
+            <label class="label" for="alumDownspout">Aluminum Downspout</label>
+            <input class="control" id="alumDownspout" name="alumDownspout" placeholder="lnft / count" />
+          </div>
+          <div>
+            <label class="label" for="alumCladding">Aluminium Cladding</label>
+            <input class="control" id="alumCladding" name="alumCladding" placeholder="lnft / area" />
+          </div>
+          <div>
+            <label class="label" for="solarPanel">Solar Panel</label>
+            <select class="control" id="solarPanel" name="solarPanel">
+              <option value="">Select…</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="card p-4">
+        <h2 class="text-lg font-semibold">Property Details — Siding</h2>
+        <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="label" for="sidingMaterial">Material</label>
+            <input class="control" id="sidingMaterial" name="sidingMaterial" placeholder="e.g., Vinyl, Hardie, Stucco trim" />
+          </div>
+          <div>
+            <label class="label" for="sidingSides">Number of Sides</label>
+            <input class="control" id="sidingSides" name="sidingSides" type="number" min="0" step="1" />
+          </div>
+          <div>
+            <label class="label" for="linerSqft">Liner Sq feet</label>
+            <input class="control" id="linerSqft" name="linerSqft" type="number" min="0" step="1" />
+          </div>
+          <div>
+            <label class="label" for="patch">Patch?</label>
+            <select class="control" id="patch" name="patch">
+              <option value="">Select…</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div>
+            <label class="label" for="colorGrade">Premium or basic color?</label>
+            <select class="control" id="colorGrade" name="colorGrade">
+              <option value="">Select…</option>
+              <option>Premium</option>
+              <option>Basic</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="card p-4">
+        <h2 class="text-lg font-semibold">Other Items</h2>
+        <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="label" for="chimneyCapCount">Chimney Cap — Count</label>
+            <input class="control" id="chimneyCapCount" name="chimneyCapCount" type="number" min="0" step="1" />
+          </div>
+          <div>
+            <label class="label" for="chimneyCapSize">Chimney Cap — Size</label>
+            <input class="control" id="chimneyCapSize" name="chimneyCapSize" placeholder="e.g., 12x12 in" />
+          </div>
+          <div>
+            <label class="label" for="chimneyRainCapCount">Chimney Rain cap — Count</label>
+            <input class="control" id="chimneyRainCapCount" name="chimneyRainCapCount" type="number" min="0" step="1" />
+          </div>
+          <div>
+            <label class="label" for="chimneyRainCapSize">Chimney Rain cap — Size</label>
+            <input class="control" id="chimneyRainCapSize" name="chimneyRainCapSize" placeholder="e.g., 12x12 in" />
+          </div>
+        </div>
+      </section>
+
+      <section class="card p-4">
+        <h2 class="text-lg font-semibold">Garage Door</h2>
+        <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="label" for="garageDoor">Garage Door</label>
+            <select class="control" id="garageDoor" name="garageDoor">
+              <option value="">Select…</option>
+              <option>Single</option>
+              <option>Double</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="card p-4">
+        <h2 class="text-lg font-semibold">Windows & Doors</h2>
+        <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="label" for="windowPanesCount">Window Panes — Count</label>
+            <input class="control" id="windowPanesCount" name="windowPanesCount" type="number" min="0" step="1" />
+          </div>
+          <div>
+            <label class="label" for="windowPanesDims">Window Panes — Dimensions</label>
+            <input class="control" id="windowPanesDims" name="windowPanesDims" placeholder="e.g., list 48x36, 24x24…" />
+          </div>
+          <div>
+            <label class="label" for="windowScreensCount">Window Screens — Count</label>
+            <input class="control" id="windowScreensCount" name="windowScreensCount" type="number" min="0" step="1" />
+          </div>
+          <div>
+            <label class="label" for="patioDoor">Patio Door</label>
+            <select class="control" id="patioDoor" name="patioDoor">
+              <option value="">Select…</option>
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </div>
+          <div>
+            <label class="label" for="patioDoorSize">Patio Door — Size</label>
+            <input class="control" id="patioDoorSize" name="patioDoorSize" placeholder="e.g., 72x80 in" />
+          </div>
+          <div>
+            <label class="label" for="stormDoor">Storm Door</label>
+            <select class="control" id="stormDoor" name="stormDoor">
+              <option value="">Select…</option>
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </div>
+          <div>
+            <label class="label" for="stormDoorSize">Storm Door — Size</label>
+            <input class="control" id="stormDoorSize" name="stormDoorSize" placeholder="e.g., 36x80 in" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Submission -->
+      <div class="flex flex-wrap items-center gap-3">
+        <button id="submitBtn" class="bg-black text-white rounded-2xl px-5 py-2 font-semibold" type="submit">Send to Office</button>
+        <button type="button" id="downloadJson" class="rounded-2xl border px-4 py-2">Export JSON</button>
+        <button type="button" id="downloadCsv" class="rounded-2xl border px-4 py-2">Export CSV</button>
+        <span id="status" class="ml-auto text-sm"></span>
+      </div>
+
+      <p class="text-xs text-gray-500">Emails go to your Formspree-configured recipient (set it to <strong>estimates@calgaryroofingexterior.com</strong>). Drafts auto‑save locally; use Reset to clear.</p>
+    </form>
+
+    <footer class="text-center text-xs text-gray-500 mt-10">© Calgary Roofing & Exteriors Ltd.</footer>
+  </main>
+
+  <script>
+    // ======= Minimal JS: autosave, exports =======
+    const DRAFT_KEY = 'crel_estimate_draft_v2';
+    const form = document.getElementById('estimateForm');
+    const statusEl = document.getElementById('status');
+
+    // Prefill date/time
+    (function initDates(){
+      const d1 = document.getElementById('dateOfficeContacted');
+      const d2 = document.getElementById('estimateDateTime');
+      if(d1 && !d1.value) d1.valueAsDate = new Date();
+      if(d2 && !d2.value) d2.value = new Date().toISOString().slice(0,16);
+    })();
+
+    function getData(){
+      const fd = new FormData(form);
+      const data = Object.fromEntries(fd.entries());
+      return data;
+    }
+
+    function fill(data){
+      if(!data) return;
+      for(const [k,v] of Object.entries(data)){
+        const el = form.elements[k];
+        if(!el) continue;
+        if(el instanceof RadioNodeList){
+          [...el].forEach(opt=>{ if(opt.value===v) opt.checked = true; });
+        } else {
+          el.value = v;
+        }
+      }
+    }
+
+    function save(){ localStorage.setItem(DRAFT_KEY, JSON.stringify(getData())); }
+    function load(){ const raw = localStorage.getItem(DRAFT_KEY); if(raw){ try{ fill(JSON.parse(raw)); }catch{} } }
+
+    load();
+    form.addEventListener('input', save);
+    document.getElementById('resetDraft').addEventListener('click', ()=>{ localStorage.removeItem(DRAFT_KEY); location.reload(); });
+
+    // Export JSON
+    document.getElementById('downloadJson').addEventListener('click', ()=>{
+      const blob = new Blob([JSON.stringify(getData(), null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob); const a = document.createElement('a');
+      const name = `Estimate_${(document.getElementById('customerName').value||'Client')}.json`;
+      a.href=url; a.download=name; a.click(); URL.revokeObjectURL(url);
+    });
+
+    // Export CSV
+    document.getElementById('downloadCsv').addEventListener('click', ()=>{
+      const d = getData();
+      const rows = Object.entries(d).map(([k,v])=>[k,v]);
+      const csv = rows.map(r=>r.map(c=>`"${String(c).replaceAll('"','""')}"`).join(',')).join('
+');
+      const blob = new Blob([csv],{type:'text/csv'}); const url = URL.createObjectURL(blob); const a = document.createElement('a');
+      const name = `Estimate_${(document.getElementById('customerName').value||'Client')}.csv`;
+      a.href=url; a.download=name; a.click(); URL.revokeObjectURL(url);
+    });
+
+    // Optional: client-side confirm on submit
+    form.addEventListener('submit', ()=>{ statusEl.textContent = 'Sending…'; setTimeout(()=>{ statusEl.textContent = 'Submitted (if your Formspree endpoint is configured).'; }, 1500); });
+  </script>
+</body>
+</html>
